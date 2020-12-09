@@ -31,6 +31,36 @@ router.get('/checkuser', async (req, res, next) => {
 });
 //社长提升普通用户为部长
 router.get('/upprivilege',async (req,res,next)=>{
+    req.query.uid=req.userInfo.uid
+    let privilege=new ClubUser(req.query)
+    console.log(req.query)
+    // console.log("query:")
+    // console.log(req.query)
+    res.json(await privilege.upPrivilege())
+});
+//社联提升普通用户为社长
+router.get('/setpresident',async (req,res,next)=>{
+    let prs=new ClubUser(req.query)
+    // prs.cuid=req.query.oldcuid
+    // let op=await prs.oldCid()
+    // console.log(op)
+    // prs.cuid=req.query.newcuid
+    // let np=await prs.newCid()
+    res.json(await prs.setPresident())
+});
+//用户列出自己所加社团
+router.get('/userclublist',async (req,res,next)=>{
+    req.query.uid=req.userInfo.uid
+    let list=new ClubUser(req.query)
+    console.log(req.query)
+    res.json(await list.userClubList())
+});
+//社长列出本社团所有成员
+router.get('/prsclubuserlist',async (req,res,next)=>{
 
-})
+    req.query.uid=req.userInfo.uid;
+    let list=new ClubUser(req.query)
+    console.log(req.userInfo)
+    res.json(await list.clubuserList())
+});
 module.exports = router;

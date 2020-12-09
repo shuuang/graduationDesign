@@ -21,13 +21,9 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "cid",
-      references: {
-        key: "cid",
-        model: "club_model"
-      }
     },
     aaName: {
-      type: DataTypes.INTEGER(8),
+      type: DataTypes.STRING(8),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
@@ -60,11 +56,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "aid",
-      references: {
-        key: "aid",
-        model: "activity_model"
-      }
+      field: "aid"
     }
   };
   const options = {

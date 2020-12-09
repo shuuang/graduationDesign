@@ -7,6 +7,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var clubRouter=require('./routes/club');
 var clubUserRouter =require('./routes/clubUser');
+var activityRouter=require('./routes/activity');
+var activityAppRouter=require('./routes/activityApp');
+var activityLogRouter=require('./routes/activityLog');
 
 var app = express();
 
@@ -34,5 +37,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/club', clubRouter);
 app.use('/clubuser',clubUserRouter);
+app.use('/activity',activityRouter);
+app.use('/activitysign',activityAppRouter);
+app.use('/activitylog',activityLogRouter);
 
 module.exports = app;

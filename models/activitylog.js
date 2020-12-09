@@ -20,11 +20,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "aid",
-      references: {
-        key: "aid",
-        model: "activity_model"
-      }
+      field: "aid"
     },
     img: {
       type: DataTypes.TEXT,
@@ -54,7 +50,7 @@ module.exports = sequelize => {
       field: "alintroduction"
     },
     aldate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
@@ -70,6 +66,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "alcounts"
+    },
+    cid: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "cid"
     }
   };
   const options = {

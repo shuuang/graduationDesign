@@ -1,5 +1,6 @@
 var db = require('../dbutil/db').db;
 var club = require('../models/club')(db);
+var clubuser=require('../models/clubuser')(db);
 
 class Club {
     constructor(body) {
@@ -41,6 +42,7 @@ class Club {
         if (this.appStatus!=2&&this.appStatus!=1){
             return {code: 50000, message: '错误'}
         }
+        var data=new Date()
         try{
             await club.update({
                 appStatus:this.appStatus
@@ -48,6 +50,13 @@ class Club {
                 where:{
                     cid:this.cid
                 }
+            }),
+            await clubuser.create({
+                uid:this.uid,
+                cid:this.cid,
+                privilege:2,
+                status:2,
+                uappyear:data.getFullYear()
             })
             return {code: 20000, message: '成功'}
         }catch (e){

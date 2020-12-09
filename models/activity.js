@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "aName"
     },
     startDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
@@ -56,11 +56,7 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "cid",
-      references: {
-        key: "cid",
-        model: "club_model"
-      }
+      field: "cid"
     },
     location: {
       type: DataTypes.TEXT,
@@ -82,7 +78,7 @@ module.exports = sequelize => {
     },
     aafile: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,

@@ -67,7 +67,7 @@ router.get('/checkappclub', async (req, res, next) => {
     if (req.userInfo.role !== 1) {
         return res.json({code: 50000, message: '没有权限'})
     }
-
+    req.query.uid=req.userInfo.uid
     let checkapp = new Club(req.query);
     res.json(await checkapp.checkAppClub())
 });
