@@ -12,8 +12,15 @@ class ActivityApp{
         this.aaConnect=body.aaConnect;
         this.aafile=body.aafile;
         this.aid=body.aid;
-
         this.uid=body.uid;
+        try {
+            activityapp.hasOne(activity,{
+                foreignKey: 'aid',
+                as: 'activity'
+            })
+        }catch (e) {
+
+        }
     }
     //查询用户信息
     async clubUser(){
@@ -65,7 +72,7 @@ class ActivityApp{
                 }
             })
             if (!add){
-                return {code: 50000, messgae: '没有这个活动'};
+                return {code: 50000, message: '没有这个活动'};
             }
             let nowdata=new Date()
             let enddata=add.endDate.replace(/-/g,'/')
@@ -123,6 +130,23 @@ class ActivityApp{
                     cid:this.cid
                 }
             })
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '失败'};
+        }
+    }
+    //根据活动查询
+    async listforActivity() {
+        try{
+            return {
+                code: 20000,
+                data: await activityapp.findAll({
+                    include:[{
+                        model: activity,
+                        as: 'activity'
+                    }]
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, messgae: '失败'};

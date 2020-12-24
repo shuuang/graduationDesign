@@ -2,6 +2,7 @@ var db = require('../dbutil/db').db;
 var users = require('../models/users')(db);
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+const {Op} = require("sequelize");
 
 class Users {   //只处理用户表
     constructor(body) {
@@ -56,6 +57,7 @@ class Users {   //只处理用户表
     }
 
     async login() {
+        console.log(this.stuNumber)
         let userList = await users.findOne({
             where: {
                 stuNumber: this.stuNumber
@@ -71,12 +73,14 @@ class Users {   //只处理用户表
         // return {code:20000,'token':this.getToken(userList.uid,userList.realname,userList.role)}
         return {
             code: 20000,
-            message: '登录成功',
-            token: jwt.sign({
-                uid: userList.uid,
-                realname: userList.realname,
-                role: userList.role
-            }, process.env.PRIVATE_KEY, {expiresIn: process.env.EXPIRED})
+            // message: '登录成功',
+            data:{
+                token: jwt.sign({
+                    uid: userList.uid,
+                    realname: userList.realname,
+                    role: userList.role
+                }, process.env.PRIVATE_KEY, {expiresIn: process.env.EXPIRED})
+            }
         }
         // console.log(userList)
         // return userList
@@ -170,7 +174,7 @@ class Users {   //只处理用户表
             return {code:50000,messgae:'修改密码失败'};
         }
     }
-    async userInfo(){
+    async userInfos(){
         try{
             let userinfo=await users.findOne({
                 attributes: { exclude: ['password'] },
@@ -178,7 +182,10 @@ class Users {   //只处理用户表
                     uid:this.uid
                 }
             })
-            return userinfo
+            return {
+                code: 20000,
+                data: userinfo
+            }
         }catch (e){
             console.log(e)
             return {code:50000,messgae:'失败'};
@@ -189,7 +196,30 @@ class Users {   //只处理用户表
             let userList=await users.findAll({
                 attributes: { exclude: ['password'] }
             })
-            return userList
+            return {
+                code: 20000,
+                data: userList
+            }
+        }catch (e){
+            console.log(e)
+            return {code:50000,messgae:'失败'};
+        }
+    }
+    //社联搜索用户
+    async search(){
+        try{
+            let list = await users.findAll({
+                where:{
+                    [Op.or]: [
+                        {stuNumber: this.realname},
+                        {realname: {[Op.like]: '%'+ this.realname + '%'}}
+                    ]
+                }
+            })
+            return {
+                code: 20000,
+                data: list
+            }
         }catch (e){
             console.log(e)
             return {code:50000,messgae:'失败'};

@@ -17,6 +17,14 @@ router.all('/*',function (req,res,next) {
         // res.json(req.userInfo)
     });
 });
+//社联查询所有社团成员
+router.get('/allclubuser',async (req,res,next)=>{
+    if (req.userInfo.role !== 1) {
+        return res.json({code: 50000, message: '没有权限'})
+    }
+    let clubuser=new ClubUser(req.body)
+    res.json(await clubuser.allClubUser())
+});
 //用户申请加入社团
 router.post('/addclubuser',async (req,res,next)=>{
     req.body.uid=req.userInfo.uid

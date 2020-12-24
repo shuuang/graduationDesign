@@ -12,6 +12,18 @@ class ClubUser{
         this.privilege=body.privilege;
         this.status=body.status;
         this.uappyear=body.uappyear;
+        try{
+            clubuser.belongsTo(users,{
+                foreignKey: 'uid',
+                as: 'users'
+            })
+            clubuser.belongsTo(club,{
+                foreignKey: 'cid',
+                as: 'club'
+            })
+        }catch (e){
+
+        }
     }
     async addClubUser(){
         // clubuser.hasOne(users)
@@ -128,6 +140,33 @@ class ClubUser{
     //     return {code: 50000, message: '失败'}
     //     }
     // }
+    //社联查询所有社团成员
+    async allClubUser(){
+        try{
+            // users.hasOne(clubuser,{
+            //     foreignKey: 'uid',
+            //     as: 'clubuser'
+            // })
+            return {
+                code:20000,
+                data: await clubuser.findAll({
+                    where: {
+                        status: 1
+                    },
+                    include: [{
+                        model: users,
+                        as: 'users'
+                    },{
+                        model: club,
+                        as: 'club'
+                    }]
+                })
+            }
+        }catch (e){
+            console.log(e)
+            return {code: 50000, message: '失败'}
+        }
+    }
     async setPresident(){
         try{
             //cuid的社团

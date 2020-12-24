@@ -67,5 +67,10 @@ router.get('/prsclubsign',async (req,res,next)=>{
         return res.json(await actapp.prsclubSign())
     }
     res.json({code: 5000, message: '没权限'})
-})
+});
+//根据活动查询
+router.get('/listforactivity',async (req,res,next)=>{
+    let list=new ActivityApp(req.query)
+    res.json(await list.listforActivity())
+});
 module.exports=router;

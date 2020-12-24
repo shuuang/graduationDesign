@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Users=require('../classes/usersHandler').Users;
 var jwt=require('jsonwebtoken');
+var rolecheck=require('../vendor/func');
 
 /* GET users listing. */
 router.post('/register', async  (req, res, next) => {
@@ -9,6 +10,7 @@ router.post('/register', async  (req, res, next) => {
   res.json(await users.register())
 });
 router.post('/login',async (req,res,next)=>{
+  req.body.stuNumber=req.body.username
   let users=new Users(req.body)
   res.json(await users.login())
 });
@@ -30,6 +32,21 @@ router.all('/*',function (req,res,next){
   // // console.log(req.headers)
   // res.json(check.check())
 });
+router.get('/userinfo',function (req, res, next) {
+  console.log(req.userInfo)
+  console.log(rolecheck(req.userInfo.role))
+  res.json({
+    code: 20000,
+    data: {
+      roles: [
+          rolecheck(req.userInfo.role)
+      ],
+      introduction: "",
+      avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+      name: req.userInfo.realname
+    }
+  })
+})
 //用户修改自己信息
 router.post('/updateuser',async (req,res,next)=>{
   req.body.uid=req.userInfo.uid
@@ -52,6 +69,7 @@ router.post('/deluser',async (req,res,next)=>{
   if (req.userInfo.role!==1){
     return res.json({code:50000,message:'没有权限'})
   }
+  console.log(req.body)
   let deluser=new Users(req.body)
   res.json(await deluser.delUser())
 });
@@ -120,7 +138,15 @@ router.post('/rootuser',async (req,res,next)=>{
   let userinfo=new Users(req.body)
   // let userinfo=await userList.userList()
   // console.log(req.body)
-  res.json(await userinfo.userInfo())
+  res.json(await userinfo.userInfos())
+})
+//社联搜索用户
+router.post('/search', async (req,res,next)=>{
+  if (req.userInfo.role!==1){
+    return res.json({code:50000,message:'没有权限'})
+  }
+  let list=new Users(req.body)
+  res.json(await list.search())
 })
 
 module.exports = router;

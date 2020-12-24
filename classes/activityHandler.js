@@ -76,7 +76,14 @@ class Activity{
     //社联查询所有活动
     async rootActivityList(){
         try{
-            return await activity.findAll({})
+            return {
+                code: 20000,
+                data: await activity.findAll({
+                    where:{
+                        astatus: this.astatus
+                    }
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, messgae: '错误'};
@@ -85,22 +92,41 @@ class Activity{
     //社团成员查询本社团的
     async clubActivityList(){
         try{
-            return await activity.findAll({
-                where:{
-                    cid:this.cid
-                }
-            })
+            return {
+                code: 20000,
+                data: await activity.findAll({
+                    where:{
+                        cid:this.cid
+                    }
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, messgae: '错误'};
         }
     }
-    // 社团查询社联发布的
+    // 查询社联发布的
     async activityList(){
         try{
-            return await activity.findAll({
-                where:{
-                   department: 1
+            return {
+                code: 20000,
+                data: await activity.findAll({
+                    where:{
+                        [Op.and]:[{department: 1},{astatus: 1}]
+                    }
+                })
+            }
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '错误'};
+        }
+    }
+    //社联查询所有活动
+    async activityInfo(){
+        try{
+            return  await activity.findOne({
+                where: {
+                    aid: this.aid
                 }
             })
         }catch (e) {

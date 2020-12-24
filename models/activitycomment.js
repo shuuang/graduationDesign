@@ -49,7 +49,7 @@ module.exports = sequelize => {
       }
     },
     createAt: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
       defaultValue: null,
       primaryKey: false,

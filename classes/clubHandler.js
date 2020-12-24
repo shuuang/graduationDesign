@@ -1,6 +1,7 @@
 var db = require('../dbutil/db').db;
 var club = require('../models/club')(db);
 var clubuser=require('../models/clubuser')(db);
+const {Op} = require("sequelize");
 
 class Club {
     constructor(body) {
@@ -28,7 +29,7 @@ class Club {
                 uid:this.uid,
                 img:this.img,
                 appImage:this.appImage,
-                appStatus:this.appStatus,
+                appStatus:1,
                 duty:this.duty
             })
             return {code: 20000, message: '成功'}
@@ -70,7 +71,8 @@ class Club {
             await club.update({
                 cname:this.cname,
                 teacher:this.teacher,
-                introduction:this.introduction
+                introduction:this.introduction,
+                appImage:this.appImage
             },{
                 where:{
                     cid:this.cid
@@ -102,10 +104,47 @@ class Club {
                     appStatus:this.appStatus
                 }
             })
-            return clubList
+            return {
+                code: 20000,
+                data: clubList
+            }
         }catch (e){
             console.log(e)
             return {code: 50000, message: '失败'}
+        }
+    }
+    // 搜索社团
+    async search(){
+        try{
+            let list = await club.findAll({
+                where:{
+                    cname: {[Op.like]: '%'+ this.cname + '%'}
+                }
+            })
+            return {
+                code: 20000,
+                data: list
+            }
+        }catch (e){
+            console.log(e)
+            return {code:50000,messgae:'失败'};
+        }
+    }
+    //查找单个社团信息
+    async clubInfo(){
+        try{
+            let list = await club.findOne({
+                where:{
+                    cid: this.cid
+                }
+            })
+            return {
+                code: 20000,
+                data: list
+            }
+        }catch (e){
+            console.log(e)
+            return {code:50000,messgae:'失败'};
         }
     }
 }

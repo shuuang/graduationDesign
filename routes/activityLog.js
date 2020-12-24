@@ -39,4 +39,20 @@ router.post('/editlog',async (req,res,next)=>{
     }
     res.json(await editlog.editLog())
 });
+//社长删除活动
+router.get('/dellog',async (req,res,next)=>{
+    req.query.uid=req.userInfo.uid
+    let dellog=new ActivityLog(req.query)
+    let userinfo=await dellog.clubUser()
+    // console.log(userinfo)
+    if (userinfo.privilege > 1) {
+        return res.json(await dellog.delLog())
+    }
+    res.json({code: 5000, message: '没权限'})
+});
+//根据社团去查根据活动去查
+router.get('/loglist',async (req,res,next)=>{
+    let list=new ActivityLog(req.query)
+    res.json(await list.logList())
+})
 module.exports=router;

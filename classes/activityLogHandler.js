@@ -68,5 +68,30 @@ class ActivityLog{
             return {code: 50000, messgae: '失败'};
         }
     }
+    async delLog(){
+        try{
+            await activitylog.destroy({
+                where:{
+                    alid:this.alid
+                }
+            })
+            return {code: 20000, messgae: '删除成功'};
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '失败'};
+        }
+    }
+    async logList(){
+        try{
+            return await activitylog.findAll({
+                where:{
+                    cid:this.cid
+                }
+            })
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '失败'};
+        }
+    }
 }
 exports.ActivityLog=ActivityLog;
