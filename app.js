@@ -43,7 +43,7 @@ app.all('*', function (req, res, next) {
     //是Access-Control-Allow-Headers   允许的header类型
     res.header('Access-Control-Allow-Headers', 'x-token, Content-Type');
     res.header('Access-Control-Allow-Methods', '*');
-    res.header('Content-Type', 'application/json;charset=utf-8');
+    // res.header('Content-Type', 'application/json;charset=utf-8');
     // res.header("Access-Control-Allow-Credentials","true");
     next();
 });

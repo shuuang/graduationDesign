@@ -84,7 +84,7 @@ class ClubUser{
                 if (usercid[i].cid==findusercid.cid){
                     console.log('1')
                     await clubuser.update({
-                        privilege:this.privilege
+                        privilege:1
                     },{
                         where:{
                             cuid:findusercid.cuid
@@ -201,11 +201,18 @@ class ClubUser{
     //用户列出自己所加社团
     async userClubList(){
         try{
-            return await clubuser.findAll({
-                where:{
-                    [Op.and]:[{uid:this.uid},{status:1}]
-                }
-            })
+            return {
+                code: 20000,
+                data: await clubuser.findAll({
+                    where:{
+                        [Op.and]:[{uid:this.uid},{status:1}]
+                    },
+                    include: [{
+                        model: club,
+                        as: 'club'
+                    }]
+                })
+            }
         }catch (e){
             console.log(e)
             return {code: 50000, message: '失败'}
@@ -223,12 +230,19 @@ class ClubUser{
             if (prscid==0){
                 return {code:50000,message:'获取列表失败'}
             }
-
-            return await clubuser.findAll({
-                where:{
-                    [Op.and]:[{cid:this.cid},{status:1}]
-                }
-            })
+            return {
+                code: 20000,
+                data: await clubuser.findAll({
+                    where:{
+                        // [Op.and]:[{cid:this.cid},{status:1}]
+                        cid: this.cid
+                    },
+                    include: [{
+                        model: users,
+                        as: 'users'
+                    }]
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, message: '失败'}

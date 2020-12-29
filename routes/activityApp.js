@@ -21,9 +21,10 @@ router.all('/*', function (req, res, next) {
 //社长报名活动
 router.post('/signactivity', async (req,res,next)=>{
     req.body.uid=req.userInfo.uid
+    console.log(req.body)
     let actapp=new ActivityApp(req.body)
     let userinfo=await actapp.clubUser()
-    // console.log(userinfo)
+    console.log(userinfo)
     //cid和uid
     if (!userinfo) {
         return res.json({code: 50000, message: '不能报名'})
@@ -72,5 +73,10 @@ router.get('/prsclubsign',async (req,res,next)=>{
 router.get('/listforactivity',async (req,res,next)=>{
     let list=new ActivityApp(req.query)
     res.json(await list.listforActivity())
+});
+// 根据社团查询活动报名cid
+router.get('/activityappstatus',async (req,res,next)=>{
+    let list=new ActivityApp(req.query)
+    res.json(await list.appStatusList())
 });
 module.exports=router;

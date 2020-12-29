@@ -2,6 +2,7 @@ var db = require('../dbutil/db').db;
 var activityapp=require('../models/activityapp')(db);
 var clubuser=require('../models/clubuser')(db);
 var activity=require('../models/activity')(db);
+var club=require('../models/club')(db);
 const {Op} = require("sequelize");
 
 class ActivityApp{
@@ -13,13 +14,13 @@ class ActivityApp{
         this.aafile=body.aafile;
         this.aid=body.aid;
         this.uid=body.uid;
-        try {
-            activityapp.hasOne(activity,{
-                foreignKey: 'aid',
-                as: 'activity'
+        try{
+            activityapp.belongsTo(club,{
+                foreignKey: 'cid',
+                as: 'club'
             })
         }catch (e) {
-
+            
         }
     }
     //查询用户信息
@@ -141,9 +142,32 @@ class ActivityApp{
             return {
                 code: 20000,
                 data: await activityapp.findAll({
+                    where: {
+                        aid: this.aid
+                    },
                     include:[{
-                        model: activity,
-                        as: 'activity'
+                        model: club,
+                        as: 'club'
+                    }]
+                })
+            }
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '失败'};
+        }
+    }
+    //根据社团查询
+    async appStatusList() {
+        try{
+            return {
+                code: 20000,
+                data: await activityapp.findAll({
+                    where: {
+                        cid: this.cid
+                    },
+                    include:[{
+                        model: club,
+                        as: 'club'
                     }]
                 })
             }

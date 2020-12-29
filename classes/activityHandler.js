@@ -1,6 +1,7 @@
 var db = require('../dbutil/db').db;
 var activity = require('../models/activity')(db);
 var clubuser = require('../models/clubuser')(db);
+var club = require('../models/club')(db);
 // var clubuserhandler = require('../classes/clubUserHandler').ClubUser;
 const {Op} = require("sequelize");
 
@@ -19,6 +20,14 @@ class Activity{
         this.aafile = body.aafile;
         this.review = body.review;
         this.astatus = body.astatus;
+        try{
+            activity.belongsTo(club,{
+                foreignKey: 'cid',
+                as: 'club'
+            })
+        }catch (e) {
+
+        }
     }
 
     async addActivity() {
@@ -81,7 +90,11 @@ class Activity{
                 data: await activity.findAll({
                     where:{
                         astatus: this.astatus
-                    }
+                    },
+                    include:[{
+                        model: club,
+                        as: 'club'
+                    }]
                 })
             }
         }catch (e) {
@@ -122,18 +135,18 @@ class Activity{
         }
     }
     //社联查询所有活动
-    async activityInfo(){
-        try{
-            return  await activity.findOne({
-                where: {
-                    aid: this.aid
-                }
-            })
-        }catch (e) {
-            console.log(e)
-            return {code: 50000, messgae: '错误'};
-        }
-    }
+    // async rootActivityList(){
+    //     try{
+    //         return  await activity.findOne({
+    //             where: {
+    //                 aid: this.aid
+    //             }
+    //         })
+    //     }catch (e) {
+    //         console.log(e)
+    //         return {code: 50000, messgae: '错误'};
+    //     }
+    // }
     //修改活动信息
     async updateInfo(){
         try{
@@ -160,7 +173,11 @@ class Activity{
             return await activity.findOne({
                 where:{
                     aid:this.aid
-                }
+                },
+                include:[{
+                    model: club,
+                    as: 'club'
+                }]
             })
         }catch (e) {
             console.log(e)

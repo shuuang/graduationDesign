@@ -98,9 +98,9 @@ router.get('/delclub',async (req,res,next)=>{
 });
 //社联查找社团
 router.post('/clublist',async (req,res,next)=>{
-    if (req.userInfo.role !== 1) {
-        return res.json({code: 50000, message: '没有权限'})
-    }
+    // if (req.userInfo.role !== 1) {
+    //     return res.json({code: 50000, message: '没有权限'})
+    // }
     // req.body.appStatus=req.body.checkStatus
     let clubList=new Club(req.body)
     // console.log(req.query,res.params)
@@ -116,9 +116,9 @@ router.post('/search', async (req,res,next)=>{
 });
 //社联搜索社团信息
 router.post('/clubinfo', async (req,res,next)=>{
-    if (req.userInfo.role!==1){
-        return res.json({code:50000,message:'没有权限'})
-    }
+    // if (req.userInfo.role!==1){
+    //     return res.json({code:50000,message:'没有权限'})
+    // }
     let list=new Club(req.body)
     res.json(await list.clubInfo())
 });

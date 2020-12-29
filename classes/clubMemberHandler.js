@@ -60,11 +60,14 @@ class ClubMember {
     //查询数据
     async memberList(){
         try{
-            return await clubmember.findAll({
-                where:{
-                    cid:this.cid
-                }
-            })
+            return {
+                code: 20000,
+                data: await clubmember.findAll({
+                    where:{
+                        cid:this.cid
+                    }
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, messgae: '错误'};

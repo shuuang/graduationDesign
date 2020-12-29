@@ -88,6 +88,7 @@ router.post('/addroot',async (req,res,next)=>{
     return res.json({code:50000,message:'没有权限'})
   }
   let users=new Users(req.body)
+  console.log(req.body)
   res.json(await users.addroot())
 })
 //用户修改自己密码

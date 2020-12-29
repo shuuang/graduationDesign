@@ -1,5 +1,6 @@
 var db = require('../dbutil/db').db;
 var club = require('../models/club')(db);
+var users = require('../models/users')(db);
 var clubuser=require('../models/clubuser')(db);
 const {Op} = require("sequelize");
 
@@ -16,6 +17,14 @@ class Club {
         this.appImage=body.appImage;
         this.appStatus=body.appStatus;
         this.duty=body.duty
+        try{
+            club.belongsTo(users,{
+                foreignKey: 'uid',
+                as: 'users'
+            })
+        }catch (e) {
+
+        }
     }
     async appClub(){
         try{
@@ -102,7 +111,11 @@ class Club {
             let clubList=await club.findAll({
                 where:{
                     appStatus:this.appStatus
-                }
+                },
+                include:[{
+                    model: users,
+                    as: 'users'
+                }]
             })
             return {
                 code: 20000,
@@ -136,7 +149,11 @@ class Club {
             let list = await club.findOne({
                 where:{
                     cid: this.cid
-                }
+                },
+                include:[{
+                    model: users,
+                    as: 'users'
+                }]
             })
             return {
                 code: 20000,
