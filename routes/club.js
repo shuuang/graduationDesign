@@ -28,6 +28,14 @@ var multer = require('multer');
 //     let users=new Users(req.body)
 //     res.json(await users.login())
 // });
+router.post('/userclublist',async (req,res,next)=>{
+    let clubList=new Club(req.body)
+    res.json(await clubList.clubList())
+});
+router.post('/userclubinfo', async (req,res,next)=>{
+    let list=new Club(req.body)
+    res.json(await list.clubInfo())
+});
 router.all('/*',function (req,res,next) {
     const token = req.headers['x-token'];
     // res.json(jwtfun.checkToken(token).error)
@@ -117,7 +125,7 @@ router.post('/search', async (req,res,next)=>{
 //社联搜索社团信息
 router.post('/clubinfo', async (req,res,next)=>{
     // if (req.userInfo.role!==1){
-    //     return res.json({code:50000,message:'没有权限'})
+    //     return res.json({code:50000,message:'没有权rootupdateclub限'})
     // }
     let list=new Club(req.body)
     res.json(await list.clubInfo())

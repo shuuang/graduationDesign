@@ -83,11 +83,14 @@ class ActivityLog{
     }
     async logList(){
         try{
-            return await activitylog.findAll({
-                where:{
-                    cid:this.cid
-                }
-            })
+            return {
+                code: 20000,
+                data: await activitylog.findAll({
+                    where:{
+                        cid:this.cid
+                    }
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, messgae: '失败'};

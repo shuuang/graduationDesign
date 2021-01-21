@@ -4,6 +4,13 @@ var Activity = require('../classes/activityHandler').Activity;
 var jwt = require('jsonwebtoken');
 var uploadFile=require('../vendor/uploadFile').upload;
 
+
+router.get('/useractivitylist',async (req,res,next)=>{
+    // console.log(req.query)
+    let list=new Activity(req.query)
+    res.json(await list.rootActivityList())
+})
+
 router.all('/*', function (req, res, next) {
     const token = req.headers['x-token'];
     // res.json(jwtfun.checkToken(token).error)
@@ -38,7 +45,7 @@ router.post('/addactivity', async (req, res, next) => {
     res.json(await activity.addActivity())
 });
 //社团申请活动
-router.post('/appactivity',uploadFile.single('aafile')  ,async (req, res, next) => {
+router.post('/appactivity',async (req, res, next) => {
     // let userinfo=new UserInfo(req.userInfo.uid)
     // console.log(req.body.cid,req.userInfo.uid)
     // let cur=await userinfo.userInfo()
@@ -47,18 +54,19 @@ router.post('/appactivity',uploadFile.single('aafile')  ,async (req, res, next) 
     req.body.uid = req.userInfo.uid
     req.body.department = 0
     req.body.astatus = 0
+    req.body.review = 0
     let activity = new Activity(req.body)
     let userinfo = await activity.userInfos()
     if (!userinfo) {
         return res.json({code: 50000, message: '不能申请'})
     }
     if (userinfo.privilege >= 1) {
-        var file=req.file
-        req.body.aafile=req.file.path
-        console.log('文件类型：%s', file.mimetype);
-        console.log('原始文件名：%s', file.originalname);
-        console.log('文件大小：%s', file.size);
-        console.log('文件保存路径：%s', file.path);
+        // var file=req.file
+        // req.body.aafile=req.file.path
+        // console.log('文件类型：%s', file.mimetype);
+        // console.log('原始文件名：%s', file.originalname);
+        // console.log('文件大小：%s', file.size);
+        // console.log('文件保存路径：%s', file.path);
         return res.json(await activity.addActivity())
     }
     res.json({code: 5000, message: '没权限'})
@@ -112,9 +120,9 @@ router.get('/activitylist',async(req,res,next)=>{
 });
 //社联查询活动信息
 router.get('/detailactivity',async (req,res,next)=>{
-    if (req.userInfo.role !== 1) {
-        return res.json({code: 50000, message: '没有权限'})
-    }
+    // if (req.userInfo.role !== 1) {
+    //     return res.json({code: 50000, message: '没有权限'})
+    // }
     let info=new Activity(req.query)
     res.json({
         code: 20000,
@@ -123,9 +131,9 @@ router.get('/detailactivity',async (req,res,next)=>{
 });
 //修改活动信息
 router.post('/updateactivity',async (req,res,next)=>{
-    if (req.userInfo.role !== 1) {
-        return res.json({code: 50000, message: '没有权限'})
-    }
+    // if (req.userInfo.role !== 1) {
+    //     return res.json({code: 50000, message: '没有权限'})
+    // }
     let update=new Activity(req.body)
     res.json(await update.updateInfo())
 });
