@@ -50,9 +50,9 @@ router.get('/dellog',async (req,res,next)=>{
     }
     res.json({code: 5000, message: '没权限'})
 });
-//根据社团去查根据活动去查
+//根据社团去查
 router.get('/loglist',async (req,res,next)=>{
     let list=new ActivityLog(req.query)
     res.json(await list.logList())
-})
+});
 module.exports=router;

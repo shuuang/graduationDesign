@@ -6,6 +6,7 @@ var rolecheck=require('../vendor/func');
 
 /* GET users listing. */
 router.post('/register', async  (req, res, next) => {
+  console.log(req.body)
   let users= new Users(req.body)
   res.json(await users.register())
 });
@@ -117,11 +118,11 @@ router.post('/rootrepwd',async (req,res,next)=>{
   res.json(await rootRe.rePassword())
 });
 //返回用户自身信息
-router.get('/userinfo',async (req,res,next)=>{
+router.get('/usersinfo',async (req,res,next)=>{
   req.body.uid=req.userInfo.uid
-  // console.log(req.body.uid)
+  console.log(req.body.uid)
   let userInfo=new Users(req.body)
-  res.json(await userInfo.userInfo())
+  res.json(await userInfo.userInfos())
 });
 //社联查询用户列表
 router.get('/userslist', async (req,res,next)=>{

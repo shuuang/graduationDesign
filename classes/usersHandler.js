@@ -46,7 +46,7 @@ class Users {   //只处理用户表
                 class: this.uclass,
                 nation: this.nation,
                 gender: this.gender,
-                role: this.role
+                role: 0
             })
             console.log(this.password)
             return {'code': 20000, 'message': '注册成功'}

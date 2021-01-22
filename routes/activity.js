@@ -9,8 +9,15 @@ router.get('/useractivitylist',async (req,res,next)=>{
     // console.log(req.query)
     let list=new Activity(req.query)
     res.json(await list.rootActivityList())
-})
-
+});
+router.get('/userdetailactivity',async (req,res,next)=>{
+    console.log(req.query)
+    let info=new Activity(req.query)
+    res.json({
+        code: 20000,
+        data: await info.activityInfo()
+    })
+});
 router.all('/*', function (req, res, next) {
     const token = req.headers['x-token'];
     // res.json(jwtfun.checkToken(token).error)
