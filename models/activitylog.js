@@ -41,7 +41,7 @@ module.exports = sequelize => {
       field: "video"
     },
     alintroduction: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(25),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -86,6 +86,11 @@ module.exports = sequelize => {
       unique: false,
       type: "BTREE",
       fields: ["aid"]
+    },{
+      name: 'club',
+      unique: false,
+      type: "BTREE",
+      fields: ["cid"]
     }]
   };
   const ActivitylogModel = sequelize.define("activitylog_model", attributes, options);

@@ -1,5 +1,6 @@
 var db = require('../dbutil/db').db;
 var activity=require('../models/activity')(db);
+var club = require('../models/club')(db);
 var clubuser=require('../models/clubuser')(db);
 var activitylog=require('../models/activitylog')(db);
 const {Op} = require("sequelize");
@@ -15,6 +16,14 @@ class ActivityLog{
         this.aldate=body.aldate;
         this.alcounts=body.alcounts;
         this.cid=body.cid;
+        try{
+            activitylog.belongsTo(club,{
+                foreignKey: 'cid',
+                as: 'club'
+            })
+        }catch (e) {
+
+        }
     }
     //查看用户信息
     async clubUser(){
@@ -81,6 +90,7 @@ class ActivityLog{
             return {code: 50000, messgae: '失败'};
         }
     }
+    //根据社团查
     async logList(){
         try{
             return {
@@ -89,6 +99,42 @@ class ActivityLog{
                     where:{
                         cid:this.cid
                     }
+                })
+            }
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '失败'};
+        }
+    }
+    //根据活动查
+    async logListforactivity(){
+        try{
+            return {
+                code: 20000,
+                data: await activitylog.findAll({
+                    where:{
+                        aid:this.aid
+                    }
+                })
+            }
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, messgae: '失败'};
+        }
+    }
+    //查询活动记录
+    async searchLog(){
+        try{
+            return {
+                code: 20000,
+                data: await activitylog.findOne({
+                    where:{
+                        alid:this.alid
+                    },
+                    include:[{
+                        model: club,
+                        as: 'club'
+                    }]
                 })
             }
         }catch (e) {

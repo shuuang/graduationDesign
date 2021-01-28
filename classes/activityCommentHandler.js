@@ -11,6 +11,15 @@ class ActivityComment {
         this.alid=body.alid;
         this.uid=body.uid;
         this.createAt=body.creatAt;
+        try{
+            activitycomment.belongsTo(users,{
+                foreignKey:'uid',
+                as:'users'
+            })
+        }catch(e)
+        {
+
+        }
     }
     async addComment(){
         try{
@@ -44,20 +53,19 @@ class ActivityComment {
     }
     async commentList(){
         try{
-            activitycomment.belongsTo(users,{
-                foreignKey:'uid',
-                as:'users'
-            })
-            return await activitycomment.findAll({
-                where:{
-                    alid:this.alid
-                },
-                include: [{
-                    model: users,
-                    as: 'users',
-                    attributes:['realname']
-                }]
-            })
+            return {
+                code: 20000,
+                data: await activitycomment.findAll({
+                    where:{
+                        alid:this.alid
+                    },
+                    include: [{
+                        model: users,
+                        as: 'users',
+                        attributes:['realname']
+                    }]
+                })
+            }
         }catch (e) {
             console.log(e)
             return {code: 50000, message: '错误'};

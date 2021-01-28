@@ -3,7 +3,21 @@ var router = express.Router();
 var ActivityLog=require('../classes/activityLogHandler').ActivityLog;
 var jwt = require('jsonwebtoken');
 
-
+//根据社团去查
+router.get('/loglist',async (req,res,next)=>{
+    let list=new ActivityLog(req.query)
+    res.json(await list.logList())
+});
+//根据活动去查
+router.get('/loglistforactivity',async (req,res,next)=>{
+    let list=new ActivityLog(req.query)
+    res.json(await list.logListforactivity())
+});
+//查询活动记录
+router.get('/searchlog',async (req,res,next)=>{
+    let list=new ActivityLog(req.query)
+    res.json(await list.searchLog())
+});
 router.all('/*', function (req, res, next) {
     const token = req.headers['x-token'];
     // res.json(jwtfun.checkToken(token).error)
@@ -49,10 +63,5 @@ router.get('/dellog',async (req,res,next)=>{
         return res.json(await dellog.delLog())
     }
     res.json({code: 5000, message: '没权限'})
-});
-//根据社团去查
-router.get('/loglist',async (req,res,next)=>{
-    let list=new ActivityLog(req.query)
-    res.json(await list.logList())
 });
 module.exports=router;

@@ -3,6 +3,14 @@ var router = express.Router();
 var ActivityComment=require('../classes/activityCommentHandler').ActivityComment;
 var jwt = require('jsonwebtoken');
 
+router.get('/commentlist',async (req,res,next)=>{
+    let list=new ActivityComment(req.query)
+    // console.log(req.query)
+    let alist=await list.commentList()
+    // console.log(alist)
+    // res.json(alist)
+    res.json(alist)
+});
 router.all('/*', function (req, res, next) {
     const token = req.headers['x-token'];
     // res.json(jwtfun.checkToken(token).error)
@@ -31,13 +39,5 @@ router.get('/delcomment',async (req,res,next)=>{
     }
     let del=new ActivityComment(req.query)
     res.json(await del.delComment())
-});
-router.get('/commentlist',async (req,res,next)=>{
-    let list=new ActivityComment(req.query)
-    // console.log(req.query)
-    let alist=await list.commentList()
-    // console.log(alist)
-    // res.json(alist)
-    res.json(alist.reverse())
 });
 module.exports=router;
