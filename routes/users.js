@@ -94,6 +94,7 @@ router.post('/addroot',async (req,res,next)=>{
 })
 //用户修改自己密码
 router.post('/repassword',async (req,res,next)=>{
+  console.log('1',req.body)
   req.body.uid=req.userInfo.uid
   // let oldpassword=req.body.oldpassword
   let user=new Users(req.body)

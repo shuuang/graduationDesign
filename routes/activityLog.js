@@ -2,6 +2,7 @@ var express=require('express');
 var router = express.Router();
 var ActivityLog=require('../classes/activityLogHandler').ActivityLog;
 var jwt = require('jsonwebtoken');
+var uploadFile=require('../vendor/uploadFile').upload;
 
 //根据社团去查
 router.get('/loglist',async (req,res,next)=>{
@@ -63,5 +64,20 @@ router.get('/dellog',async (req,res,next)=>{
         return res.json(await dellog.delLog())
     }
     res.json({code: 5000, message: '没权限'})
+});
+//  多文件上传
+router.post('/logupload',uploadFile.array('img',2),  function (req, res, next) {
+    var file = req.files;
+    console.log(req.body)
+    // console.log('文件类型：%s', file.mimetype);
+    // console.log('原始文件名：%s', file.originalname);
+    // console.log('文件大小：%s', file.size);
+    // console.log('文件保存路径：%s', file.path);
+    console.log(req.files)
+    console.log(file)
+    res.json({
+        code: 20000,
+        data: file
+    })
 });
 module.exports=router;
