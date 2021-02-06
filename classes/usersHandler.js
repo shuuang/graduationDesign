@@ -108,10 +108,10 @@ class Users {   //只处理用户表
                     uid: this.uid
                 }
             })
-            return {code:20000,messgae:'更新成功'};
+            return {code:20000,message:'更新成功'};
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'更新失败'};
+            return {code:50000,message:'更新失败'};
         }
     }
     async delUser(){
@@ -122,10 +122,10 @@ class Users {   //只处理用户表
                     uid:this.uid
                 }
             })
-            return {code:20000,meaasge:'已删除用户'}
+            return {code:20000,message:'已删除用户'}
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'删除失败'};
+            return {code:50000,message:'删除失败'};
         }
         // console.log('delUser')
     }
@@ -144,7 +144,7 @@ class Users {   //只处理用户表
             return {code:20000,message:'修改权限成功'}
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'修改权限失败'};
+            return {code:50000,message:'修改权限失败'};
         }
     }
     async verifyPassword(){
@@ -171,7 +171,7 @@ class Users {   //只处理用户表
             return {code:20000,message:'修改密码成功'}
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'修改密码失败'};
+            return {code:50000,message:'修改密码失败'};
         }
     }
     async userInfos(){
@@ -188,7 +188,7 @@ class Users {   //只处理用户表
             }
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'失败'};
+            return {code:50000,message:'失败'};
         }
     }
     async userList(){
@@ -202,7 +202,7 @@ class Users {   //只处理用户表
             }
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'失败'};
+            return {code:50000,message:'失败'};
         }
     }
     //社联搜索用户
@@ -222,7 +222,7 @@ class Users {   //只处理用户表
             }
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'失败'};
+            return {code:50000,message:'失败'};
         }
     }
 }

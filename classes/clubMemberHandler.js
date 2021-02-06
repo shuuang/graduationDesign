@@ -23,7 +23,7 @@ class ClubMember {
             })
         } catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //计算num
@@ -39,7 +39,7 @@ class ClubMember {
             return list.length
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     async addMember(){
@@ -51,10 +51,10 @@ class ClubMember {
                 //正常应该获取某一年
                 year:this.year
             })
-            return {code: 20000, messgae: '成功'};
+            return {code: 20000, message: '成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //查询数据
@@ -70,7 +70,7 @@ class ClubMember {
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
 }

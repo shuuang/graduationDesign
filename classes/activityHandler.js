@@ -44,10 +44,10 @@ class Activity{
                 review: this.review,
                 astatus: this.astatus
             })
-            return {code: 20000, messgae: '成功'};
+            return {code: 20000, message: '成功'};
         } catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //查询当前用户是不是本社团的
@@ -61,7 +61,7 @@ class Activity{
             })
         } catch (e) {
             console.log(e)
-            // return {code: 50000, messgae: '错误'};
+            // return {code: 50000, message: '错误'};
             return false;
         }
     }
@@ -79,7 +79,7 @@ class Activity{
             return {code:20000,message:'审核完成'}
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //社联查询所有活动
@@ -99,7 +99,7 @@ class Activity{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //社团成员查询本社团的
@@ -115,7 +115,7 @@ class Activity{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     // 查询社联发布的
@@ -131,7 +131,7 @@ class Activity{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //社联查询所有活动
@@ -161,10 +161,10 @@ class Activity{
                     aid:this.aid
                 }
             })
-            return {code: 20000, messgae: '修改成功'}
+            return {code: 20000, message: '修改成功'}
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //查询活动信息
@@ -181,7 +181,7 @@ class Activity{
             })
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //删除活动
@@ -192,10 +192,10 @@ class Activity{
                     aid:this.aid
                 }
             })
-            return {code: 20000, messgae: '删除成功'}
+            return {code: 20000, message: '删除成功'}
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
 }

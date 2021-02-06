@@ -28,17 +28,18 @@ class Club {
     }
     async appClub(){
         try{
+            let data=new Date()
             await club.create({
                 // cid:this.cid,
                 cname:this.cname,
                 teacher:this.teacher,
-                creatAt:this.creatAt,
+                creatAt:data.toLocaleDateString(),
                 introduction:this.introduction,
                 file:this.file,
                 uid:this.uid,
                 img:this.img,
                 appImage:this.appImage,
-                appStatus:1,
+                appStatus:this.appStatus,
                 duty:this.duty
             })
             return {code: 20000, message: '成功'}
@@ -140,7 +141,7 @@ class Club {
             }
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'失败'};
+            return {code:50000,message:'失败'};
         }
     }
     //查找单个社团信息
@@ -161,7 +162,7 @@ class Club {
             }
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'失败'};
+            return {code:50000,message:'失败'};
         }
     }
 }

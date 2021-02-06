@@ -40,7 +40,7 @@ class ClubUser{
             return {code:20000,message:'成功'}
         }catch (e){
             console.log(e)
-            return {code:50000,messgae:'失败'};
+            return {code:50000,message:'失败'};
         }
     }
     async checkUser(){

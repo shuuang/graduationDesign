@@ -33,7 +33,7 @@ class ActivityApp{
             })
         } catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     //查询数据库是否存在同一社团同一活动
@@ -46,7 +46,7 @@ class ActivityApp{
             })
         }catch (e){
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     // async addActApp(){
@@ -58,10 +58,10 @@ class ActivityApp{
     //             aafile:this.aafile,
     //             aid:this.aid
     //         })
-    //         return {code: 20000, messgae: '成功'};
+    //         return {code: 20000, message: '成功'};
     //     }catch (e) {
     //         console.log(e)
-    //         return {code: 50000, messgae: '失败'};
+    //         return {code: 50000, message: '失败'};
     //     }
     // }
     //是否到截止时间
@@ -95,10 +95,10 @@ class ActivityApp{
                 aafile:this.aafile,
                 aid:this.aid
             })
-            return {code: 20000, messgae: '成功'};
+            return {code: 20000, message: '成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     async signList(){
@@ -106,7 +106,7 @@ class ActivityApp{
             return await activityapp.findAll()
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //取消报名
@@ -117,10 +117,10 @@ class ActivityApp{
                     aaid:this.aaid
                 }
             })
-            return {code: 20000, messgae: '删除成功'};
+            return {code: 20000, message: '删除成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //社长某社团报名列表
@@ -133,7 +133,7 @@ class ActivityApp{
             })
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //根据活动查询
@@ -153,7 +153,7 @@ class ActivityApp{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //根据社团查询
@@ -173,7 +173,7 @@ class ActivityApp{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
 }

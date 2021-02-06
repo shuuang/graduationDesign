@@ -35,7 +35,7 @@ class ActivityLog{
             })
         } catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '错误'};
+            return {code: 50000, message: '错误'};
         }
     }
     async addLog(){
@@ -51,10 +51,10 @@ class ActivityLog{
                 alcounts:0,
                 cid:this.cid
             })
-            return {code: 20000, messgae: '成功'};
+            return {code: 20000, message: '成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     async editLog(){
@@ -71,10 +71,10 @@ class ActivityLog{
                     alid:this.alid
                 }
             })
-            return {code: 20000, messgae: '修改成功'};
+            return {code: 20000, message: '修改成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     async delLog(){
@@ -84,10 +84,10 @@ class ActivityLog{
                     alid:this.alid
                 }
             })
-            return {code: 20000, messgae: '删除成功'};
+            return {code: 20000, message: '删除成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //根据社团查
@@ -103,7 +103,7 @@ class ActivityLog{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //根据活动查
@@ -119,7 +119,7 @@ class ActivityLog{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
     //查询活动记录
@@ -139,7 +139,7 @@ class ActivityLog{
             }
         }catch (e) {
             console.log(e)
-            return {code: 50000, messgae: '失败'};
+            return {code: 50000, message: '失败'};
         }
     }
 }

@@ -51,20 +51,22 @@ router.all('/*',function (req,res,next) {
     });
 });
 //增加社团申请
-router.post('/appClub',uploadFile.single('appImage'),  async (req, res, next) => {
+router.post('/appClub', async (req, res, next) => {
     // console.log('appclub start')
-    var file = req.file;
+    // var file = req.file;
     // req.body.appImage=req.file.path
-    console.log('文件类型：%s', file.mimetype);
-    console.log('原始文件名：%s', file.originalname);
-    console.log('文件大小：%s', file.size);
-    console.log('文件保存路径：%s', file.path);
+    // console.log('文件类型：%s', file.mimetype);
+    // console.log('原始文件名：%s', file.originalname);
+    // console.log('文件大小：%s', file.size);
+    // console.log('文件保存路径：%s', file.path);
     // console.log(req.body)
-    req.body.appImage=file.path;
+    // req.body.appImage=file.path;
     // console.log('2')
-    // console.log(req.body)
+    console.log(req.body)
+    req.body.uid = req.userInfo.uid
+    req.body.appStatus = 0
     let appclub = new Club(req.body);
-    appclub.appStatus=0;
+    // appclub.appStatus=0;
     console.log(req.body)
     // console.log('3')
     res.json(await appclub.appClub())
@@ -84,6 +86,8 @@ router.post('/rootaddclub',async (req,res,next)=>{
     if (req.userInfo.role !== 1) {
         return res.json({code: 50000, message: '没有权限'})
     }
+    req.body.appStatus = 1
+    req.body.uid = req.userInfo.uid
     let rootAppClub=new Club(req.body)
     res.json(await rootAppClub.appClub())
 });
@@ -130,7 +134,7 @@ router.post('/clubinfo', async (req,res,next)=>{
     let list=new Club(req.body)
     res.json(await list.clubInfo())
 });
-//  上传文件
+//  单上传文件
 router.post('/upload',uploadFile.single('file'),  function (req, res, next) {
     var file = req.file;
     // console.log('文件类型：%s', file.mimetype);

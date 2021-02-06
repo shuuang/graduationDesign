@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Activity = require('../classes/activityHandler').Activity;
 var jwt = require('jsonwebtoken');
-var uploadFile=require('../vendor/uploadFile').upload;
 
 
 router.get('/useractivitylist',async (req,res,next)=>{
