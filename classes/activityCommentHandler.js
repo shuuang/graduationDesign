@@ -11,6 +11,7 @@ class ActivityComment {
         this.alid=body.alid;
         this.uid=body.uid;
         this.createAt=body.creatAt;
+        this.alcounts=body.alcounts;
         try{
             activitycomment.belongsTo(users,{
                 foreignKey:'uid',
@@ -31,6 +32,13 @@ class ActivityComment {
                 uid:this.uid,
                 createAt:data
                 // createAt:data.toLocaleDateString()
+            })
+            await activitylog.update({
+                alcounts: this.alcounts
+            },{
+                where: {
+                    alid: this.alid
+                }
             })
             return {code: 20000, message: '评论成功'};
         }catch (e) {
@@ -71,5 +79,6 @@ class ActivityComment {
             return {code: 50000, message: '错误'};
         }
     }
+
 }
 exports.ActivityComment=ActivityComment;

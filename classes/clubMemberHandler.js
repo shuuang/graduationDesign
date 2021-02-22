@@ -29,6 +29,7 @@ class ClubMember {
     //计算num
     async numValue(){
         try{
+            console.log('3',this.year)
             var list=await clubuser.findAll({
                 where:{
                     [Op.and]:[{uappyear:this.year},{status:1},{cid:this.cid}]
@@ -44,12 +45,14 @@ class ClubMember {
     }
     async addMember(){
         try{
+            const time = new Date()
+            console.log(time.getFullYear())
             await clubmember.create({
                 cid:this.cid,
                 //clubuser中年份，status=1，cid得到
                 num:this.num,
                 //正常应该获取某一年
-                year:this.year
+                year:time.getFullYear()
             })
             return {code: 20000, message: '成功'};
         }catch (e) {

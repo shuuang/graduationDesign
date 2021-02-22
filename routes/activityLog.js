@@ -6,6 +6,7 @@ var uploadFile=require('../vendor/uploadFile').upload;
 
 //  多文件上传
 router.post('/logupload',uploadFile.array('img',10),  function (req, res, next) {
+    const token = req.headers['x-token'];
     // console.log(req.body)
     // req.body.img = req.body.formData.img
     var file = req.files;
@@ -17,6 +18,7 @@ router.post('/logupload',uploadFile.array('img',10),  function (req, res, next) 
     // console.log(file)
     res.json({
         code: 20000,
+        file:token,
         data: file
     })
 });

@@ -28,6 +28,23 @@ var multer = require('multer');
 //     let users=new Users(req.body)
 //     res.json(await users.login())
 // });
+
+//  单上传文件
+router.post('/upload',uploadFile.single('file'),  function (req, res, next) {
+    var file = req.file;
+    const token = req.headers['x-token'];
+    // console.log('文件类型：%s', file.mimetype);
+    // console.log('原始文件名：%s', file.originalname);
+    // console.log('文件大小：%s', file.size);
+    // console.log('文件保存路径：%s', file.path);
+    // console.log(req.file)
+    console.log(file)
+    res.json({
+        code: 20000,
+        type: token,
+        data: file
+    })
+});
 router.post('/userclublist',async (req,res,next)=>{
     let clubList=new Club(req.body)
     res.json(await clubList.clubList())
@@ -133,20 +150,6 @@ router.post('/clubinfo', async (req,res,next)=>{
     // }
     let list=new Club(req.body)
     res.json(await list.clubInfo())
-});
-//  单上传文件
-router.post('/upload',uploadFile.single('file'),  function (req, res, next) {
-    var file = req.file;
-    // console.log('文件类型：%s', file.mimetype);
-    // console.log('原始文件名：%s', file.originalname);
-    // console.log('文件大小：%s', file.size);
-    // console.log('文件保存路径：%s', file.path);
-    console.log(req.file)
-    console.log(file)
-    res.json({
-        code: 20000,
-        data: file
-    })
 });
 // //社联审核社团列表
 // router.get('/checkclublist',async (req,res,next)=>{

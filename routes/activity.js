@@ -168,5 +168,13 @@ router.get('/delactivity',async (req,res,next)=>{
     }
     return res.json({code: 50000, message: '不是社长没有权限'})
 });
+router.post('/searchactivity', async (req,res,next)=>{
+    if (req.userInfo.role!==1){
+        return res.json({code:50000,message:'没有权限'})
+    }
+    // console.log(req.body)
+    let list=new Activity(req.body)
+    res.json(await list.search())
+})
 
 module.exports = router;

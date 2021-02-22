@@ -40,7 +40,7 @@ class Activity{
                 cid: this.cid,
                 location: this.location,
                 department: this.department,
-                aafile: this.aafile,
+                aafile: this.aafile||'public\\upload\\1612861150731.jpg',
                 review: this.review,
                 astatus: this.astatus
             })
@@ -196,6 +196,26 @@ class Activity{
         }catch (e) {
             console.log(e)
             return {code: 50000, message: '错误'};
+        }
+    }
+    async search(){
+        try{
+            let list = await activity.findAll({
+                where:{
+                    aName: {[Op.like]: '%'+ this.aName + '%'}
+                },
+                include:[{
+                    model: club,
+                    as: 'club'
+                }]
+            })
+            return {
+                code: 20000,
+                data: list
+            }
+        }catch (e){
+            console.log(e)
+            return {code:50000,message:'失败'};
         }
     }
 }

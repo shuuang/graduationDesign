@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "aaName"
     },
     aaConnect: {
-      type: DataTypes.INTEGER(255),
+      type: DataTypes.STRING(20),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,

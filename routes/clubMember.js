@@ -21,14 +21,18 @@ router.all('/*', function (req, res, next) {
 //增加人员记录验证，是否同一社团，社长
 router.get('/addmember',async (req,res,next)=>{
     req.query.uid=req.userInfo.uid
+    const time = new Date()
+    req.query.year=time.getFullYear()
     let member=new clubmember(req.query)
     let userinfo=await member.clubUser()
     // console.log(userinfo)
-    console.log(req.query)
+    console.log('1', req.query)
     if (!userinfo) {
         return res.json({code: 50000, message: '不能执行'})
     }
     if (userinfo.privilege > 1) {
+
+        // console.log('2', req.query)
         let num=await member.numValue()
         console.log(num)
         req.query.num=num

@@ -19,6 +19,10 @@ class ActivityApp{
                 foreignKey: 'cid',
                 as: 'club'
             })
+            activityapp.belongsTo(activity,{
+                foreignKey: 'aid',
+                as: 'activity'
+            })
         }catch (e) {
             
         }
@@ -75,13 +79,12 @@ class ActivityApp{
             if (!add){
                 return {code: 50000, message: '没有这个活动'};
             }
-            let nowdata=new Date()
-            let enddata=add.endDate.replace(/-/g,'/')
-            // console.log(nowdata)
-            console.log(nowdata.toLocaleDateString())
-            console.log(enddata)
+            let nowdata=new Date() //现在的时间
+            let enddata=add.endDate.replace(/-/g,'/')  //结束的时间
+            console.log(nowdata)
+            console.log(new Date(enddata))
             // console.log(enddata.getTime())
-            if (nowdata.toLocaleDateString()>enddata){
+            if (nowdata>new Date(enddata)){
                 // console.log('超过')
                 return {code:50000, message:'已超过截止日期'}
             }
@@ -168,6 +171,9 @@ class ActivityApp{
                     include:[{
                         model: club,
                         as: 'club'
+                    },{
+                        model: activity,
+                        as: 'activity'
                     }]
                 })
             }

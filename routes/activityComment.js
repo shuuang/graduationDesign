@@ -29,6 +29,10 @@ router.all('/*', function (req, res, next) {
 //增加评论
 router.post('/addcomment',async (req,res,next)=>{
     req.body.uid=req.userInfo.uid
+    const num = new ActivityComment(req.body)
+    const result = await num.commentList()
+    // console.log(result.data.length)
+    req.body.alcounts = result.data.length
     let com=new ActivityComment(req.body)
     res.json(await com.addComment())
 });
