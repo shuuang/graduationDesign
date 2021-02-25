@@ -45,6 +45,8 @@ router.post('/upload',uploadFile.single('file'),  function (req, res, next) {
         data: file
     })
 });
+
+//查询社团列表
 router.post('/userclublist',async (req,res,next)=>{
     let clubList=new Club(req.body)
     res.json(await clubList.clubList())
@@ -150,6 +152,35 @@ router.post('/clubinfo', async (req,res,next)=>{
     // }
     let list=new Club(req.body)
     res.json(await list.clubInfo())
+});
+
+//echarts 每年新增社团列表
+router.post('/eClub',async (req,res,next)=>{
+    let clubList=new Club(req.body)
+    let list = await clubList.clubList()
+    const endlist = list.data.filter(item => {
+        item.createAt = new Date(item.createAt).getFullYear()
+        return item
+    })
+    const xAxis = []
+    endlist.forEach(item => {
+        xAxis.push(item.createAt)
+    })
+    const xAxisSet = Array.from(new Set(xAxis)) //[]
+    const yAxis = []
+    for(let i=0; i<xAxisSet.length;i++){
+        // console.log(xAxisSet[i])
+        req.body.createAt = xAxisSet[i]
+        let cList = new Club(req.body)
+        yAxis.push(await cList.clubNum(req.body))
+    }
+    // console.log(xAxisSet)
+    // console.log(yAxis)
+    res.json({
+        code: 20000,
+        xAxis: xAxisSet,
+        yAxis: yAxis
+    })
 });
 // //社联审核社团列表
 // router.get('/checkclublist',async (req,res,next)=>{

@@ -37,19 +37,19 @@ class Users {   //只处理用户表
                 stuNumber: this.stuNumber,
                 password: encodePassword,
                 realname: this.realname,
-                email: this.email,
-                wechat: this.wechat,
-                qq: this.qq,
-                phone: this.phone,
-                home: this.home,
-                birthday: this.birthday,
-                class: this.uclass,
-                nation: this.nation,
-                gender: this.gender,
+                email: this.email||"xxxx@xx.com",
+                wechat: this.wechat||"xxxxxxxxxx",
+                qq: this.qq||"xxxxxxxxxx",
+                phone: this.phone||"1xxxxxxxxxx",
+                home: this.home||"大连东软信息学院",
+                birthday: this.birthday||"2000-01-01",
+                class: this.uclass||"class1",
+                nation: this.nation||"汉族",
+                gender: this.gender||"0",
                 role: 0
             })
             console.log(this.password)
-            return {'code': 20000, 'message': '注册成功'}
+            return {code: 20000, message: '注册成功'}
         } catch (e) {
             console.log(e)
             return {code: 50000, message: '注册失败'}
@@ -219,6 +219,29 @@ class Users {   //只处理用户表
             return {
                 code: 20000,
                 data: list
+            }
+        }catch (e){
+            console.log(e)
+            return {code:50000,message:'失败'};
+        }
+    }
+    //echarts
+    async genderList(){
+        try{
+            let maleList=await users.findAll({
+                where:{
+                    gender: 0
+                }
+            })
+            let femaleList=await users.findAll({
+                where:{
+                    gender: 1
+                }
+            })
+            return {
+                code: 20000,
+                // data: [{male: maleList},{female: femaleList}]
+                data: [{maleList},{femaleList}]
             }
         }catch (e){
             console.log(e)

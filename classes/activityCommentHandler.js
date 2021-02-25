@@ -79,6 +79,16 @@ class ActivityComment {
             return {code: 50000, message: '错误'};
         }
     }
-
+    async allComment(){
+        try{
+            return {
+                code: 20000,
+                data: await activitycomment.findAll()
+            }
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, message: '错误'};
+        }
+    }
 }
 exports.ActivityComment=ActivityComment;

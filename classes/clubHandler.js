@@ -9,7 +9,7 @@ class Club {
         this.cid = body.cid;
         this.cname = body.cname;
         this.teacher = body.teacher;
-        this.creatAt = body.creatAt;
+        this.createAt = body.createAt;
         this.introduction = body.introduction;
         this.file = body.file;
         this.uid = body.uid;
@@ -175,6 +175,21 @@ class Club {
         } catch (e) {
             console.log(e)
             return {code: 50000, message: '失败'};
+        }
+    }
+    // echarts
+    async clubNum() {
+        try {
+            let clubList = await club.findAll({
+                where: {
+                    appStatus: 1,
+                    createAt: {[Op.like]: this.createAt + '%'}
+                }
+            })
+            return clubList.length
+        } catch (e) {
+            console.log(e)
+            return {code: 50000, message: '失败'}
         }
     }
 }

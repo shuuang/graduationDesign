@@ -44,4 +44,10 @@ router.get('/delcomment',async (req,res,next)=>{
     let del=new ActivityComment(req.query)
     res.json(await del.delComment())
 });
+//总评论数量
+router.get('/allcomment',async (req,res,next)=>{
+    let list=new ActivityComment(req.query)
+    let alist=await list.allComment()
+    res.json(alist)
+});
 module.exports=router;

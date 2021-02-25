@@ -41,13 +41,14 @@ class ActivityLog{
     async addLog(){
         try{
             let data=new Date()
-            // console.log(data.toLocaleDateString())
+            console.log(data.toLocaleDateString())
+            const time = data.toLocaleDateString()
             await activitylog.create({
                 aid:this.aid,
                 img:this.img,
                 video:this.video,
                 alintroduction:this.alintroduction,
-                aldate:data.toLocaleDateString(),
+                aldate: time,
                 alcounts:0,
                 cid:this.cid
             })

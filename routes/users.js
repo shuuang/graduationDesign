@@ -151,5 +151,9 @@ router.post('/search', async (req,res,next)=>{
   let list=new Users(req.body)
   res.json(await list.search())
 })
-
+//echarts gender
+router.post('/egender', async (req,res,next)=>{
+  let userList=new Users(req.body)
+  res.json(await userList.genderList())
+});
 module.exports = router;
