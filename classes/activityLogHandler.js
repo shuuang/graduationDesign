@@ -52,10 +52,10 @@ class ActivityLog{
                 alcounts:0,
                 cid:this.cid
             })
-            return {code: 20000, message: '成功'};
+            return {code: 20000, message: '添加活动记录成功'};
         }catch (e) {
             console.log(e)
-            return {code: 50000, message: '失败'};
+            return {code: 50000, message: '添加活动记录失败'};
         }
     }
     async editLog(){

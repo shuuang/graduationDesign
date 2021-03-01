@@ -3,6 +3,31 @@ var router = express.Router();
 var clubmember=require('../classes/clubMemberHandler').ClubMember;
 var jwt = require('jsonwebtoken');
 
+
+router.post('/eaddnum', async(req,res,next)=>{
+    let list = new clubmember(req.body)
+    let memberlist = (await list.memberList()).data
+    const xAxis = []
+    memberlist.forEach(item => {
+        xAxis.push(item.year)
+    })
+    const xAxisSet = Array.from(new Set(xAxis))
+    const yAxis = []
+    for(let i=0; i<xAxisSet.length;i++){
+        // console.log(xAxisSet[i])
+        req.body.year = xAxisSet[i]
+        let mList = new clubmember(req.body)
+        const len=await mList.yearList(req.body)
+        // console.log(len)
+        yAxis.push(len.length)
+    }
+    console.log(yAxis)
+    return res.json({
+        code: 20000,
+        xAxis: xAxisSet,
+        yAxis: yAxis
+    })
+})
 router.all('/*', function (req, res, next) {
     const token = req.headers['x-token'];
     // res.json(jwtfun.checkToken(token).error)

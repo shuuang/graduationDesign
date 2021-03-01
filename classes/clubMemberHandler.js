@@ -76,5 +76,18 @@ class ClubMember {
             return {code: 50000, message: '错误'};
         }
     }
+    async yearList(){
+        try{
+            return await clubmember.findAll({
+                where: {
+                    // cid: this.cid
+                    [Op.and]:[{year:this.year},{cid:this.cid}]
+                }
+            })
+        }catch (e) {
+            console.log(e)
+            return {code: 50000, message: '错误'};
+        }
+    }
 }
 exports.ClubMember=ClubMember;

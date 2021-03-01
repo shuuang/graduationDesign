@@ -3,6 +3,7 @@ var router = express.Router();
 var Users=require('../classes/usersHandler').Users;
 var jwt=require('jsonwebtoken');
 var rolecheck=require('../vendor/func');
+const axios = require('axios')
 
 /* GET users listing. */
 router.post('/register', async  (req, res, next) => {
@@ -14,6 +15,26 @@ router.post('/login',async (req,res,next)=>{
   req.body.stuNumber=req.body.username
   let users=new Users(req.body)
   res.json(await users.login())
+});
+//小程序登录
+router.post('/wechat',function(req,res,next){
+  // console.log(req.body)
+  axios({
+    url: 'https://api.weixin.qq.com/sns/jscode2session',
+    method: 'get',
+    params: {
+      appid: 'wx629778dc0401a4a3',
+      secret: '62a42ac6936eef38df5b75d267f1fbbb',
+      js_code: req.body.code,
+      grant_type: 'authorization_code'
+    }
+  }).then(response => {
+    // console.log(response)
+    res.json({
+      code: 20000,
+      data: response.data
+    })
+  })
 });
 router.all('/*',function (req,res,next){
   const token = req.headers['x-token'];
@@ -104,7 +125,7 @@ router.post('/repassword',async (req,res,next)=>{
   // let result=await user.verifyPassword()
   // console.log(result)
   if (!await user.verifyPassword()){
-    return  res.json({code:50000,messgae:'旧密码不正确'})
+    return  res.json({code:50000,message:'旧密码不正确'})
   }
   user.password=req.body.newpassword
   let rePwd=await user.rePassword()
