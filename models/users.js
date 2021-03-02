@@ -129,6 +129,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "role"
+    },
+    openid: {
+      type: DataTypes.STRING(40),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "openid"
     }
   };
   const options = {

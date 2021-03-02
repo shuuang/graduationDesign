@@ -20,6 +20,7 @@ class Users {   //只处理用户表
         this.nation = body.nation;
         this.gender = body.gender;
         this.role = body.role;
+        this.openid = body.openid;
     }
 
     async register() {
@@ -46,7 +47,7 @@ class Users {   //只处理用户表
                 class: this.uclass||"class1",
                 nation: this.nation||"汉族",
                 gender: this.gender||"0",
-                role: 0
+                role: 0,
             })
             console.log(this.password)
             return {code: 20000, message: '注册成功'}
@@ -102,7 +103,8 @@ class Users {   //只处理用户表
                 birthday: this.birthday,
                 class: this.uclass,
                 nation: this.nation,
-                gender: this.gender
+                gender: this.gender,
+                openid: this.openid
             }, {
                 where: {
                     uid: this.uid
@@ -244,6 +246,39 @@ class Users {   //只处理用户表
                 data: [{maleList},{femaleList}]
             }
         }catch (e){
+            console.log(e)
+            return {code:50000,message:'失败'};
+        }
+    }
+    async openId(){
+        try{
+            let user = await users.findOne({
+                where:{
+                    openid: this.openid
+                }
+            })
+            // console.log(user) //null || {}
+            if(user){
+                return {
+                    code: 20000,
+                    data: {
+                        token: jwt.sign({
+                            uid: user.uid,
+                            realname: user.realname,
+                            role: user.role
+                        }, process.env.PRIVATE_KEY, {expiresIn: process.env.EXPIRED})
+                    }
+                }
+            }else {
+                return {
+                    code: 50000,
+                    data: this.openid
+                }
+            }
+            // const stuNumber = user.stuNumber
+            // const password = user.password
+            // console.log(stuNumber,password)
+        }catch (e) {
             console.log(e)
             return {code:50000,message:'失败'};
         }

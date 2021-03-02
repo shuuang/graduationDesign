@@ -7,7 +7,7 @@ const axios = require('axios')
 
 /* GET users listing. */
 router.post('/register', async  (req, res, next) => {
-  console.log(req.body)
+  // console.log(req.body)
   let users= new Users(req.body)
   res.json(await users.register())
 });
@@ -17,8 +17,10 @@ router.post('/login',async (req,res,next)=>{
   res.json(await users.login())
 });
 //小程序登录
-router.post('/wechat',function(req,res,next){
+router.post('/wechat',function (req,res,next) {
   // console.log(req.body)
+  let openid = ''
+  // let user=new Users(req.body)
   axios({
     url: 'https://api.weixin.qq.com/sns/jscode2session',
     method: 'get',
@@ -28,13 +30,22 @@ router.post('/wechat',function(req,res,next){
       js_code: req.body.code,
       grant_type: 'authorization_code'
     }
-  }).then(response => {
-    // console.log(response)
-    res.json({
-      code: 20000,
-      data: response.data
-    })
+  }).then(async response => {
+    // console.log(response.data)
+    const body = {
+      openid: response.data.openid
+    }
+    // return openid
+    // req.body.openid = openid
+    // console.log(openid)
+    let user=new Users(body)
+    res.json(await user.openId())
   })
+  // console.log(req.body)
+  // res.json({
+  //   code: 20000,
+  //   data: openid
+  // })
 });
 router.all('/*',function (req,res,next){
   const token = req.headers['x-token'];
